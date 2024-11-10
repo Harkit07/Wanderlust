@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-8 offset-2">
       <h1>Form to Add New</h1>
-      <form method="post" action="/listing">
+      <form method="post" action="/listing" novalidate class="needs-validation">
         <div class="mb-3">
           <label for="title" class="form-label">Enter Title</label>
           <input
@@ -11,11 +11,20 @@
             type="text"
             placeholder="Add a catchy title"
             class="form-control"
+            required
           />
+          <div class="valid-feedback">Title looks good!</div>
         </div>
         <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea name="listing[description]" class="form-control"></textarea>
+          <label for="description" class="form-label" required
+            >Description</label
+          >
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please enter a short description!</div>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image Link</label>
@@ -31,10 +40,11 @@
             <label for="price" class="form-label">Price</label>
             <input
               name="listing[price]"
-              type="number"
               placeholder="1200"
               class="form-control"
+              required
             />
+            <div class="invalid-feedback">Price should be valid!</div>
           </div>
           <div class="mb-3 col-8">
             <label for="country" class="form-label">Country</label>
@@ -43,7 +53,9 @@
               type="text"
               placeholder="India"
               class="form-control"
+              required
             />
+            <div class="invalid-feedback">Country should be valid!</div>
           </div>
         </div>
         <div class="mb-3">
@@ -53,7 +65,9 @@
             type="text"
             placeholder="Jaipur, Rajasthan"
             class="form-control"
+            required
           />
+          <div class="invalid-feedback">Location should be valid!</div>
         </div>
         <button class="btn btn-dark add-btn">Add</button>
         <br /><br />
