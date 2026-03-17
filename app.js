@@ -80,6 +80,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// ✅ Health check endpoint (required for keep-alive ping)
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "alive", uptime: process.uptime() });
+});
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -102,6 +107,29 @@ app.use((err, req, res, next) => {
   console.log(err);
 });
 
+// ✅ Keep-alive self-ping function (prevents Render sleep)
+const keepAlive = () => {
+  const url = process.env.RENDER_URL || `http://localhost:${port}/health`;
+
+  // Only ping in production
+  if (process.env.NODE_ENV === "production") {
+    setInterval(
+      () => {
+        https
+          .get(url, (res) => {
+            console.log(`Keep-alive ping: ${res.statusCode}`);
+          })
+          .on("error", (err) => {
+            console.log("Keep-alive error:", err.message);
+          });
+      },
+      10 * 60 * 1000,
+    ); // ping every 10 minutes
+    console.log("Keep-alive started ✅");
+  }
+};
+
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
+  keepAlive();
 });
