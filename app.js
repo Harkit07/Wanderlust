@@ -20,7 +20,9 @@ const reviewRouter = require("./routes/review.js");
 const listingRouter = require("./routes/listing.js");
 const userRouter = require("./routes/user.js");
 const categoryRouter = require("./routes/category.js");
+
 const dbUrl = process.env.ATLASDB_URL;
+const RENDER_URL = process.env.RENDER_URL;
 
 main()
   .then(() => {
@@ -107,27 +109,16 @@ app.use((err, req, res, next) => {
   console.log(err);
 });
 
-// ✅ Keep-alive self-ping function (prevents Render sleep)
-const keepAlive = () => {
-  const url = process.env.RENDER_URL || `http://localhost:${port}/health`;
-
-  // Only ping in production
-  if (process.env.NODE_ENV === "production") {
-    setInterval(
-      () => {
-        https
-          .get(url, (res) => {
-            console.log(`Keep-alive ping: ${res.statusCode}`);
-          })
-          .on("error", (err) => {
-            console.log("Keep-alive error:", err.message);
-          });
-      },
-      10 * 60 * 1000,
-    ); // ping every 10 minutes
-    console.log("Keep-alive started ✅");
-  }
-};
+function keepAlive() {
+  setInterval(
+    () => {
+      fetch(`${RENDER_URL}/health`)
+        .then(() => console.log("Keep-alive ping sent"))
+        .catch((err) => console.log("Keep-alive ping failed:", err));
+    },
+    10 * 60 * 1000,
+  );
+}
 
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
