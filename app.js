@@ -116,7 +116,7 @@ function keepAlive() {
         .then(() => console.log("Keep-alive ping sent"))
         .catch((err) => console.log("Keep-alive ping failed:", err));
     },
-    10 * 60 * 1000,
+    5 * 60 * 1000,
   );
 }
 
