@@ -80,11 +80,6 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// ✅ Health check endpoint (required for keep-alive ping)
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "alive", uptime: process.uptime() });
-});
-
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
@@ -97,17 +92,6 @@ app.use("/", userRouter);
 // app.all("*", (req, res, next) => {
 //   next(new ExpressError(404, "Page Not Found!"));
 // });
-
-function keepAlive() {
-  setInterval(
-    () => {
-      fetch(`${RENDER_URL}/health`)
-        .then(() => console.log("Keep-alive ping sent"))
-        .catch((err) => console.log("Keep-alive ping failed:", err));
-    },
-    5 * 60 * 1000,
-  );
-}
 
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
