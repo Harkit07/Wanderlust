@@ -1,6 +1,6 @@
 # 🌍 Wanderlust
 
-A full-stack travel listing web application inspired by Airbnb, built with Node.js, Express, EJS, and MongoDB. Users can browse, create, and review property listings across various categories — complete with interactive maps powered by Mapbox.
+A full-stack travel listing web application inspired by Airbnb, built with Node.js, Express, EJS, and MongoDB. Users can browse, create, and review property listings across various categories — complete with interactive maps powered by Mapbox. Deployed on Vercel.
 
 ---
 
@@ -16,6 +16,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 - [Environment Variables](#environment-variables)
 - [API Routes](#api-routes)
 - [Listing Categories](#listing-categories)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
 
 ---
@@ -32,7 +33,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 - 🗄️ **Session Storage** — Sessions persisted in MongoDB using `connect-mongo`
 - 💬 **Flash Messages** — Success and error feedback messages across all user actions
 - ✅ **Server-side Validation** — Request body validated with Joi schemas
-- ♻️ **Keep-Alive Ping** — Self-pinging in production to prevent Render free-tier sleep
+- 🚀 **Deployed on Vercel** — Serverless deployment with zero cold-start configuration
 
 ---
 
@@ -97,7 +98,8 @@ Wanderlust/
 ├── middleware.js         # isLoggedIn, isOwner, isReviewAuthor, validate*
 ├── cloudConfig.js        # Cloudinary & Multer storage config
 ├── schema.js             # Joi validation schemas
-└── app.js                # Express app entry point
+├── vercel.json           # Vercel routing config
+└── app.js                # Express app entry point (exported for Vercel)
 ```
 
 ---
@@ -166,10 +168,9 @@ CLOUD_API_SECRET=your_cloudinary_api_secret
 
 # Mapbox
 MAP_TOKEN=your_mapbox_public_access_token
-
-# Keep-alive (your deployed backend URL on Render)
-RENDER_URL=https://your-app-name.onrender.com
 ```
+
+> Add all the above variables in **Vercel Dashboard → Project Settings → Environment Variables** for production.
 
 ---
 
@@ -229,6 +230,41 @@ Listings can be tagged with one of the following categories:
 | Arctic | Cold-weather and snow destinations |
 | Domes | Unique geodesic dome stays |
 | Boats | Houseboat or yacht stays |
+
+---
+
+## 🚢 Deployment
+
+This app is deployed on **Vercel** as a serverless Node.js application.
+
+### Required Changes for Vercel
+
+1. **`app.js`** — Export the Express app instead of calling `listen` directly:
+```js
+// Replace app.listen(...) with:
+if (require.main === module) {
+  app.listen(8080);
+}
+module.exports = app;
+```
+
+2. **`vercel.json`** — Place in the project root:
+```json
+{
+  "version": 2,
+  "builds": [{ "src": "app.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "app.js" }]
+}
+```
+
+### Deploying
+
+- Connect your GitHub repo to [Vercel](https://vercel.com)
+- Set the **Root Directory** to the project root (where `app.js` lives)
+- Add all environment variables in **Vercel Dashboard → Project Settings → Environment Variables**
+- Vercel auto-deploys on every push to `main`
+
+> **Note:** Vercel's serverless environment is stateless — session data is persisted in MongoDB via `connect-mongo`, and images are stored on Cloudinary, so no data is lost between function invocations. The `RENDER_URL` keep-alive variable is no longer needed.
 
 ---
 
