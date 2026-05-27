@@ -18,7 +18,7 @@ jobs:
 
     env:
       NODE_ENV: test
-      MAP_TOKEN: dummy_map_token
+      MAP_TOKEN: pk.eyJ1IjoiZHVtbXkifQ.dummy_for_testing_only
       CLOUD_NAME: dummy_cloud
       CLOUD_API_KEY: dummy_key
       CLOUD_API_SECRET: dummy_secret
