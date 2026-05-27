@@ -19,7 +19,10 @@ const listingRouter = require("./routes/listing.js");
 const userRouter = require("./routes/user.js");
 const categoryRouter = require("./routes/category.js");
 
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl =
+  process.env.NODE_ENV === "test"
+    ? process.env.TEST_DB_URL || "mongodb://localhost:27017/wanderlust_test"
+    : process.env.ATLASDB_URL;
 const RENDER_URL = process.env.RENDER_URL;
 
 main()
@@ -93,6 +96,8 @@ app.use("/", userRouter);
 //   next(new ExpressError(404, "Page Not Found!"));
 // });
 
-app.listen(8080, () => {
-  console.log("server is listening to port 8080");
-});
+if (require.main === module) {
+  app.listen(8080, () => console.log("server is listening to port 8080"));
+}
+
+module.exports = app;
