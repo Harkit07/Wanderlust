@@ -1,7 +1,4 @@
-if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
-}
-
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const MongoStore = require("connect-mongo");
@@ -47,9 +44,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
   touchAfter: 24 * 3600,
 });
 
@@ -63,17 +57,15 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days, correctly relative to each request
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: false, // ✅ secure:true blocks cookies on http (localhost). Only enable in production over https.
+    secure: false,
   },
 };
 
-// ✅ session and flash must come before any routes
 app.use(session(sessionOptions));
 app.use(flash());
 
-// ✅ locals middleware once, after flash
 app.use(async (req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -92,9 +84,28 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-// app.all("*", (req, res, next) => {
-//   next(new ExpressError(404, "Page Not Found!"));
-// });
+// ─── 404 & Error Handling ──────────────────────────────────
+app.use((req, res, next) => {
+  next(new ExpressError(404, "Page Not Found!"));
+});
+
+app.use((err, req, res, next) => {
+  if (err.name === "CastError") {
+    return next(new ExpressError(404, "Resource not found"));
+  }
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  const { status = 500, message = "Something went wrong" } = err;
+  if (status === 404) {
+    return res.status(404).render("404");
+  }
+  res.status(status).render("error", { status, message });
+});
 
 if (require.main === module) {
   app.listen(8080, () => console.log("server is listening to port 8080"));

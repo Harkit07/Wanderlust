@@ -1,7 +1,33 @@
-<% layout("/layouts/boilerplate") %>
+<% layout('layouts/boilerplate') -%>
 
-<div class="row mt-3">
-  <div class="alert alert-danger col-6 offset-3" role="alert">
-    <p class="alert-heading"><%= message %></p>
+<div class="row justify-content-center my-5">
+  <div class="col-lg-8 col-md-10">
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center">
+      <!-- 404 Image (from public/img/PageNotFound.png) -->
+      <img
+        src="/images/PageNotFound.png"
+        alt="Lost at Sea – 404"
+        class="img-fluid mx-auto d-block"
+        style="max-width: 400px; width: 100%; height: auto"
+      />
+
+      <h1 class="display-3 fw-bold mt-4 mb-2">404 – LOST AT SEA</h1>
+      <p class="h5 text-uppercase text-muted">PAGE NOT FOUND</p>
+
+      <p
+        class="lead mt-3 mb-4"
+        style="max-width: 500px; margin-left: auto; margin-right: auto"
+      >
+        Oops! It seems you've veered off course. The page you were searching for
+        is <span class="text-warning fw-semibold">no longer in port</span>.
+        Perhaps a bad coordinate or a broken link led you here.
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3 mt-2">
+        <a href="/listings" class="btn btn-dark rounded-pill px-4 py-2">
+          <i class="fa-regular fa-compass me-2"></i> RETURN HOME
+        </a>
+      </div>
+    </div>
   </div>
 </div>
