@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/images/Logo2.png" alt="Wanderlust Logo" width="200"/>
+  <img src="./public/images/Logo2.png" alt="Wanderlust Logo" width="200"/>
 </p>
 
 <h1 align="center">🌍 Wanderlust</h1>
