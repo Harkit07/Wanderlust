@@ -1,4 +1,3 @@
-````md
 # 🌍 Wanderlust
 
 A full-stack travel listing web application inspired by Airbnb, built with Node.js, Express, EJS, and MongoDB. Users can browse, create, and review property listings across various categories — complete with interactive maps powered by Mapbox. Deployed on Vercel.
@@ -24,24 +23,35 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 
 ## ✨ Features
 
-- 🗺️ **Interactive Maps** — Mapbox-powered geocoding and map display on each listing's detail page
-- 🏠 **Listing CRUD** — Create, view, edit, and delete property listings with image uploads
-- 📂 **Category Filtering** — Browse listings by category (Trending, Mountains, Castles, Camping, etc.)
-- ⭐ **Reviews** — Authenticated users can post and delete star-rated reviews on any listing
-- 🔐 **Authentication** — Signup, login, and logout using **bcrypt** password hashing + **express-session** with MongoDB session store
-- 🛡️ **Authorization** — Only the listing owner can edit or delete their listing; only review authors can delete their review
-- 🖼️ **Image Uploads** — Listing images stored on Cloudinary via Multer
-- 🗄️ **Session Storage** — Sessions persisted in MongoDB using `connect-mongo`
-- 💬 **Flash Messages** — Success and error feedback messages across all user actions
-- ✅ **Server-side Validation** — Request body validated with Joi schemas
-- 🚀 **Deployed on Vercel** — Serverless deployment with zero cold-start configuration
+- 🗺️ **Interactive Maps**
+  Mapbox-powered geocoding and map display on each listing's detail page.
+- 🏠 **Listing CRUD**
+  Create, view, edit, and delete property listings with image uploads.
+- 📂 **Category Filtering**
+  Browse listings by category (Trending, Mountains, Castles, Camping, etc.).
+- ⭐ **Reviews**
+  Authenticated users can post and delete star-rated reviews on any listing.
+- 🔐 **Authentication**
+  Signup, login, and logout using **bcrypt** password hashing + **express-session** with a MongoDB session store.
+- 🛡️ **Authorization**
+  Only the listing owner can edit or delete their listing; only review authors can delete their own review.
+- 🖼️ **Image Uploads**
+  Listing images stored on Cloudinary via Multer.
+- 🗄️ **Session Storage**
+  Sessions persisted in MongoDB using `connect-mongo`.
+- 💬 **Flash Messages**
+  Success and error feedback messages across all user actions.
+- ✅ **Server-side Validation**
+  Request body validated with Joi schemas.
+- 🚀 **Deployed on Vercel**
+  Serverless deployment with zero cold-start configuration.
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Technology               | Purpose                                 |
-| ------------------------ | --------------------------------------- |
+| ------------------------ | ---------------------------------------- |
 | Node.js + Express 4      | Web server & routing                    |
 | MongoDB + Mongoose       | Database & ODM                          |
 | EJS + EJS-Mate           | Server-side templating with layouts     |
@@ -50,8 +60,8 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 | Mapbox SDK               | Forward geocoding & map rendering       |
 | Cloudinary + Multer      | Image upload & cloud storage            |
 | connect-flash            | Flash messaging                         |
-| Joi                      | Server-side schema validation           |
-| method-override          | Support for PUT/DELETE in HTML forms    |
+| Joi                       | Server-side schema validation           |
+| method-override           | Support for PUT/DELETE in HTML forms    |
 
 ---
 
@@ -101,7 +111,6 @@ Wanderlust/
 ├── vercel.json
 └── app.js
 ```
-````
 
 ---
 
@@ -182,56 +191,56 @@ For production deployments, add these variables to your Vercel project settings.
 
 ### Listings — `/listings`
 
-| Method | Route                | Auth     | Description             |
-| ------ | -------------------- | -------- | ----------------------- |
-| GET    | `/listings`          | ❌       | Browse all listings     |
-| GET    | `/listings/new`      | ✅       | Render new listing form |
-| POST   | `/listings`          | ✅       | Create a listing        |
-| GET    | `/listings/:id`      | ❌       | View listing details    |
-| GET    | `/listings/:id/edit` | ✅ Owner | Edit listing form       |
-| PUT    | `/listings/:id`      | ✅ Owner | Update listing          |
-| DELETE | `/listings/:id`      | ✅ Owner | Delete listing          |
+| Method | Route                 | Auth     | Description              |
+| ------ | --------------------- | -------- | ------------------------ |
+| GET    | `/listings`           | ❌       | Browse all listings      |
+| GET    | `/listings/new`       | ✅       | Render new listing form  |
+| POST   | `/listings`           | ✅       | Create a listing         |
+| GET    | `/listings/:id`       | ❌       | View listing details     |
+| GET    | `/listings/:id/edit`  | ✅ Owner | Edit listing form        |
+| PUT    | `/listings/:id`       | ✅ Owner | Update listing           |
+| DELETE | `/listings/:id`       | ✅ Owner | Delete listing           |
 
 ### Categories — `/listings/category`
 
-| Method | Route                          | Auth | Description                 |
-| ------ | ------------------------------ | ---- | --------------------------- |
-| GET    | `/listings/category/:category` | ❌   | Filter listings by category |
+| Method | Route                           | Auth | Description                  |
+| ------ | -------------------------------- | ---- | ----------------------------- |
+| GET    | `/listings/category/:category`  | ❌   | Filter listings by category   |
 
 ### Reviews — `/listings/:id/reviews`
 
-| Method | Route                             | Auth      | Description   |
-| ------ | --------------------------------- | --------- | ------------- |
-| POST   | `/listings/:id/reviews`           | ✅        | Create review |
-| DELETE | `/listings/:id/reviews/:reviewId` | ✅ Author | Delete review |
+| Method | Route                              | Auth      | Description    |
+| ------ | ----------------------------------- | --------- | -------------- |
+| POST   | `/listings/:id/reviews`             | ✅        | Create review  |
+| DELETE | `/listings/:id/reviews/:reviewId`   | ✅ Author | Delete review  |
 
 ### Users
 
-| Method | Route     | Auth | Description       |
-| ------ | --------- | ---- | ----------------- |
-| GET    | `/signup` | ❌   | Signup page       |
-| POST   | `/signup` | ❌   | Register user     |
-| GET    | `/login`  | ❌   | Login page        |
-| POST   | `/login`  | ❌   | Authenticate user |
-| GET    | `/logout` | ✅   | Logout user       |
+| Method | Route     | Auth | Description        |
+| ------ | --------- | ---- | ------------------- |
+| GET    | `/signup` | ❌   | Signup page         |
+| POST   | `/signup` | ❌   | Register user       |
+| GET    | `/login`  | ❌   | Login page          |
+| POST   | `/login`  | ❌   | Authenticate user   |
+| GET    | `/logout` | ✅   | Logout user         |
 
 ---
 
 ## 📂 Listing Categories
 
-| Category      | Description                |
-| ------------- | -------------------------- |
-| Trending      | Popular listings           |
-| Rooms         | Private room stays         |
-| Iconic Cities | Famous city accommodations |
-| Mountain      | High-altitude retreats     |
-| Castles       | Historic castle properties |
-| Amazing Pools | Listings with pools        |
-| Camping       | Outdoor stays              |
-| Farms         | Rural farm experiences     |
-| Arctic        | Snow destinations          |
-| Domes         | Dome accommodations        |
-| Boats         | Houseboats and yachts      |
+| Category      | Description                 |
+| -------------- | ---------------------------- |
+| Trending       | Popular listings             |
+| Rooms          | Private room stays           |
+| Iconic Cities  | Famous city accommodations   |
+| Mountain       | High-altitude retreats       |
+| Castles        | Historic castle properties   |
+| Amazing Pools  | Listings with pools          |
+| Camping        | Outdoor stays                |
+| Farms          | Rural farm experiences       |
+| Arctic         | Snow destinations            |
+| Domes          | Dome accommodations          |
+| Boats          | Houseboats and yachts        |
 
 ---
 
@@ -310,7 +319,3 @@ Then open a Pull Request.
 ## 📝 License
 
 This project is licensed under the ISC License.
-
-```
-
-```
