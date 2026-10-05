@@ -56,7 +56,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 
 | Technology               | Purpose                                 |
 | ------------------------ | ---------------------------------------- |
-| Node.js + Express 4      | Web server & routing                    |
+| Node.js + Express 5      | Web server & routing                    |
 | MongoDB + Mongoose       | Database & ODM                          |
 | EJS + EJS-Mate           | Server-side templating with layouts     |
 | bcrypt + express-session | Password hashing and session management |
