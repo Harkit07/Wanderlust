@@ -278,18 +278,23 @@ module.exports = app;
       "src": "/(.*)",
       "dest": "app.js"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  }
 }
 ```
 
 ### Deploying to Vercel
 
-1. Connect GitHub repository to Vercel
-2. Set the project root directory
-3. Add all environment variables
-4. Deploy
+1. Connect the GitHub repository to Vercel and set the project root directory.
+2. Add all environment variables in Vercel.
+3. Add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` as GitHub Actions secrets.
+4. Pushes to `main` run the CI workflow; Vercel Git deployments for `main` are disabled so production deploys happen only through the workflow after tests pass.
 
-Vercel automatically redeploys on every push to the `main` branch.
+The Vercel CLI deploy in the workflow is not affected by the Git deployment setting.
 
 ---
 
