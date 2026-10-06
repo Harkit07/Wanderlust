@@ -36,6 +36,14 @@ module.exports.createListing = async (req, res) => {
       limit: 1,
     })
     .send();
+  const features = response.body.features;
+  if (!features || features.length === 0) {
+    req.flash(
+      "error",
+      "Could not find that location. Try a more specific address."
+    );
+    return res.redirect("/listings/new");
+  }
 
   let url = req.file.path;
   let filename = req.file.filename;
@@ -43,7 +51,7 @@ module.exports.createListing = async (req, res) => {
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
 
-  newListing.geometry = response.body.features[0].geometry;
+  newListing.geometry = features[0].geometry;
   // res.send(newListing);
   await newListing.save();
   req.flash("success", "New Listing Created!");

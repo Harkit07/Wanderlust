@@ -69,9 +69,11 @@ app.use(flash());
 app.use(async (req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currUser = req.session.userId
+  const user = req.session.userId
     ? await User.findById(req.session.userId)
     : null;
+  req.user = user;
+  res.locals.currUser = user;
   next();
 });
 

@@ -28,7 +28,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 ## ✨ Features
 
 - 🗺️ **Interactive Maps**
-  Mapbox-powered geocoding and map display on each listing's detail page.
+  Mapbox-powered geocoding and map display on each listing's detail page, with an error shown when an address cannot be found.
 - 🏠 **Listing CRUD**
   Create, view, edit, and delete property listings with image uploads.
 - 📂 **Category Filtering**
