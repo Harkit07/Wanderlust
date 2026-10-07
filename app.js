@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const MongoStore = require("connect-mongo");
+const { MongoStore } = require("connect-mongo");
 const ExpressError = require("./utils/ExpressError.js");
 const mongoose = require("mongoose");
 const path = require("path");
