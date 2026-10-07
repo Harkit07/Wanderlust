@@ -12,7 +12,7 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:latest
+        image: mongo:8.0
         ports:
           - 27017:27017
 
@@ -23,7 +23,7 @@ jobs:
       CLOUD_API_KEY: dummy_key
       CLOUD_API_SECRET: dummy_secret
       SECRET: test_secret_value
-      ATLASDB_URL: mongodb://localhost:27017/wanderlust_test
+      TEST_DB_URL: mongodb://localhost:27017/wanderlust_test
 
     steps:
       - name: Checkout code
