@@ -79,4 +79,10 @@ describe("Listings Routes", () => {
     const res = await request(app).get("/listings/nonexistentid123");
     expect([400, 404, 500]).toContain(res.statusCode);
   });
+
+  test("GET /missing-page - should render the custom 404 page", async () => {
+    const res = await request(app).get("/missing-page");
+    expect(res.statusCode).toBe(404);
+    expect(res.text).toContain("404 – LOST AT SEA");
+  });
 });
