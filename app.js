@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 const { MongoStore } = require("connect-mongo");
 const ExpressError = require("./utils/ExpressError.js");
-const os = require("os");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
@@ -17,6 +16,7 @@ const listingRouter = require("./routes/listing.js");
 const userRouter = require("./routes/user.js");
 const categoryRouter = require("./routes/category.js");
 
+// ─── Database URL ───────────────────────────────────────────
 const dbUrl =
   process.env.NODE_ENV === "test"
     ? process.env.TEST_DB_URL ||
@@ -28,25 +28,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
-// ─── Middleware ────────────────────────────────────────────
+// ─── Middleware ─────────────────────────────────────────────
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
-// ─── Session Store ─────────────────────────────────────────
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  mongoOptions: { runtimeAdapters: { os } },
-  touchAfter: 24 * 3600,
-});
-
-store.on("error", (err) => {
-  console.error("ERROR in MONGO SESSION STORE:", err);
-});
-
+// ─── Session Configuration ─────────────────────────────────
 const sessionOptions = {
-  store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
@@ -56,6 +45,22 @@ const sessionOptions = {
     secure: process.env.NODE_ENV === "production",
   },
 };
+
+// Use MongoDB session store in production/development.
+// Use the default MemoryStore during Jest tests because
+// the tests do not require persistent sessions.
+if (process.env.NODE_ENV !== "test") {
+  const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 3600,
+  });
+
+  store.on("error", (err) => {
+    console.error("ERROR in MONGO SESSION STORE:", err);
+  });
+
+  sessionOptions.store = store;
+}
 
 app.use(session(sessionOptions));
 app.use(flash());
