@@ -4,6 +4,7 @@ const app = express();
 const { MongoStore } = require("connect-mongo");
 const ExpressError = require("./utils/ExpressError.js");
 const mongoose = require("mongoose");
+const os = require("os");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
@@ -31,7 +32,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect(dbUrl, { runtimeAdapters: { os } });
 }
 
 app.set("view engine", "ejs");
