@@ -12,6 +12,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Dependency Versions](#dependency-versions)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -36,7 +37,7 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 - ⭐ **Reviews**
   Authenticated users can post and delete star-rated reviews on any listing.
 - 🔐 **Authentication**
-  Signup, login, and logout using **bcrypt** password hashing + **express-session** with a MongoDB session store.
+  Signup, login, and logout using **bcryptjs** password hashing + **express-session** with a MongoDB session store.
 - 🛡️ **Authorization**
   Only the listing owner can edit or delete their listing; only review authors can delete their own review.
 - 🖼️ **Image Uploads**
@@ -59,13 +60,51 @@ A full-stack travel listing web application inspired by Airbnb, built with Node.
 | Node.js + Express 5      | Web server & routing                    |
 | MongoDB + Mongoose       | Database & ODM                          |
 | EJS + EJS-Mate           | Server-side templating with layouts     |
-| bcrypt + express-session | Password hashing and session management |
+| bcryptjs + express-session | Password hashing and session management |
 | connect-mongo            | MongoDB session store                   |
 | Mapbox SDK               | Forward geocoding & map rendering       |
 | Cloudinary + Multer      | Image upload & cloud storage            |
+| multer-storage-cloudinary-v2 | Cloudinary storage engine for Multer |
 | connect-flash            | Flash messaging                         |
 | Joi                       | Server-side schema validation           |
 | method-override           | Support for PUT/DELETE in HTML forms    |
+
+---
+
+## 📦 Dependency Versions
+
+Direct dependency version ranges are managed in `package.json`; `package-lock.json` records the resolved versions used for installation.
+
+### Runtime dependencies
+
+| Package | Version range |
+| ------- | ------------- |
+| `@mapbox/mapbox-sdk` | `^0.16.2` |
+| `bcryptjs` | `^3.0.3` |
+| `body-parser` | `^2.3.0` |
+| `cloudinary` | `^2.11.0` |
+| `connect-flash` | `^0.1.1` |
+| `connect-mongo` | `^6.0.0` |
+| `dotenv` | `^18.0.6` |
+| `ejs` | `^7.0.1` |
+| `ejs-mate` | `^4.0.0` |
+| `express` | `^5.2.1` |
+| `express-session` | `^1.19.0` |
+| `joi` | `^18.2.9` |
+| `method-override` | `^3.0.0` |
+| `mongoose` | `^9.11.0` |
+| `multer` | `^2.4.0` |
+| `multer-storage-cloudinary-v2` | `^1.0.3` |
+
+### Development dependencies
+
+| Package | Version range |
+| ------- | ------------- |
+| `@types/jest` | `^30.0.0` |
+| `cross-env` | `^10.1.0` |
+| `jest` | `^30.5.2` |
+| `mongodb-memory-server` | `^11.3.0` |
+| `supertest` | `^7.3.1` |
 
 ---
 
@@ -122,7 +161,7 @@ Wanderlust/
 
 ### Prerequisites
 
-- Node.js v20.18.0+
+- Node.js v20.19.0+
 - npm v9+
 - MongoDB Database (Local or Atlas)
 - Cloudinary Account
